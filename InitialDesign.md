@@ -28,7 +28,7 @@ Front-end app to interact with the APIs
 Request 
 ```json
 {
-    "flagname"="{flag-name}"
+    "flagname":"{flag-name}"
 }
 ```
 Response 200,400,500
@@ -41,12 +41,12 @@ Response
 ```json
 {
     {
-        "flaId"="1",
-        "flagname"="filterTable"
+        "flaId":"1",
+        "flagname":"filterTable"
     },
     {
-        "flaId"="2",
-        "flagname"="orderTable"
+        "flaId":"2",
+        "flagname":"orderTable"
     }
 }
 ```
@@ -58,11 +58,11 @@ Request  {}
 Response 
 ```json
 {
-    "flaId"="1",
-    "flagname"="{flag-name}",
+    "flaId":"1",
+    "flagname":"{flag-name}",
     "Enviroments": [
-        {"Name" = "test", "Value" = "true", "created" = "today", "userLastChange" = "Admin"},
-        {"Name" = "prod", "Value" = "false", "created" = "today", "userLastChange" = "Admin"}
+        {"Name" : "test", "Value" : "true", "created" : "today", "userLastChange" : "Admin"},
+        {"Name" : "prod", "Value" : "false", "created" : "today", "userLastChange" : "Admin"}
     ]
 }
 ```
@@ -72,9 +72,9 @@ Response
 Request 
 ```json
 {
-    "flagname"="{flag-name}",
-    "Enviroment" = "test",
-    "Value" = "true"
+    "flagname":"{flag-name}",
+    "Enviroment" : "test",
+    "Value" : "true"
 }
 ```
 
@@ -88,20 +88,20 @@ Request  {}
 Response 
 ```json
 {
-    "flaId"="1",
-    "flagname"="{flag-name}",
+    "flaId":"1",
+    "flagname":"{flag-name}",
     "History": [
         {
-            "Action" = "create", 
-            "Detail" = "flagName={name}, Value=false", 
-            "dateTime" = "today", 
-            "byUser" = "Developer"
+            "Action" : "create", 
+            "Detail" : "flagName={name}, Value=false", 
+            "dateTime" : "today", 
+            "byUser" : "Developer"
         },
         {
-            "Action" = "update", 
-            "Detail" = "flagName={name}, value =true", 
-            "dateTime" = "today", 
-            "byUser" = "Admin"
+            "Action" : "update", 
+            "Detail" : "flagName={name}, value=true", 
+            "dateTime" : "today", 
+            "byUser" : "Admin"
         }
     ]
 }
@@ -120,10 +120,10 @@ Request  {}
 Response 
 ```json
 {
-    "enviroment"="prod",
-    "flagname"="{flag-name}",
-    "user" = "username",
-    "isActive" = "false"
+    "enviroment":"prod",
+    "flagname":"{flag-name}",
+    "user" : "username",
+    "isActive" : "false"
 }
 ```
 
@@ -141,4 +141,6 @@ git flow feature start scaffolding-and-configuration
 git flow feature finish scaffolding-and-configuration
 
 
+### dotnet
+dotnet new gitignore
 
