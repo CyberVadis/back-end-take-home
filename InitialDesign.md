@@ -142,5 +142,5 @@ git flow feature finish scaffolding-and-configuration
 
 
 ### dotnet
-dotnet new gitignore
-
+`dotnet new gitignore`
+`dotnet new webapi --name FeatureFlag.Api -controllers`
