@@ -131,15 +131,18 @@ Response
 ### GET api/Checkflags/{flag-name}/{user}/{enviroment}
 #### User Stories 8: Configure a flag to be active for a certain percentage of users in an environment. a/b testing
 
+This should me made with the hash code of `{user}+{flag}+{enviroment}`
+
 
 
 ## Commands
 ### Git
+```
 git flow init
 git flow feature start scaffolding-and-configuration
 ...
 git flow feature finish scaffolding-and-configuration
-
+```
 
 ### dotnet
 `dotnet new gitignore`
