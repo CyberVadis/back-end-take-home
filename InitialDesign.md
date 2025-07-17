@@ -170,6 +170,7 @@ dotnet new gitignore
 dotnet new webapi --name FeatureFlag.Api -controllers
 
 dotnet new apicontroller --name AuditController
+dotnet new xunit --name FeatureFlag.Application.Tests
 
 dotnet add package Microsoft.Extensions.DependencyInjection.Abstractions
 ...
