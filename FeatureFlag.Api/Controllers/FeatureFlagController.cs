@@ -56,13 +56,23 @@ public class FeatureFlagController(IFeatureFlagService _featureFlagService) : Co
                 Error = $"Invalid environment. Valid values: {string.Join(", ", Enum.GetNames<EnvironmentEnum>())}"
             });
         }
-        var updatedFeatureFlag = await _featureFlagService.ToggleActivationAsync(id, envEnum, token);
+
+        var updatedFeatureFlag = await _featureFlagService.ToggleActivationAsync(
+            id,
+            envEnum,
+            request.Percentage,
+            request.IsEnabled,
+            token);
+
         if (updatedFeatureFlag is null)
         {
             return NotFound();
         }
 
         return Ok();
+
+
+
     }
 
     [HttpDelete(Endpoints.FeatureFlag.Delete)]
@@ -78,36 +88,11 @@ public class FeatureFlagController(IFeatureFlagService _featureFlagService) : Co
         return Ok();
     }
 
-
-    [HttpPut(Endpoints.FeatureFlag.UpdatePartially)]
-    public async Task<IActionResult> SetPartialActivation(
-        [FromBody] UpdatePartiallyRequest request,
-        CancellationToken token)
-    {
-        if (!IsValidEnvironment(request.Environment, out var envEnum))
-        {
-            return BadRequest(new
-            {
-                Error = $"Invalid environment. Valid values: {string.Join(", ", Enum.GetNames<EnvironmentEnum>())}"
-            });
-        }
-        var updated = await _featureFlagService.SetPartialActivation(
-            request.FeatureFlagId,
-            envEnum,
-            request.Percentage,
-            token);
-
-        if (!updated)
-        {
-            return NotFound();
-        }
-        return Ok();
-    }
-
     [HttpGet(Endpoints.FeatureFlag.GetActive)]
     public async Task<IActionResult> IsActiveByEnvironment(
         [FromRoute] Guid id,
         [FromRoute] string environment,
+        [FromRoute] string clientId,
         CancellationToken token)
     {
         if (!IsValidEnvironment(environment, out var envEnum))
@@ -117,7 +102,7 @@ public class FeatureFlagController(IFeatureFlagService _featureFlagService) : Co
                 Error = $"Invalid environment. Valid values: {string.Join(", ", Enum.GetNames<EnvironmentEnum>())}"
             });
         }
-        var featureFlag = await _featureFlagService.IsFeatureEnabled(id, envEnum, token);
+        var featureFlag = await _featureFlagService.IsFeatureEnabled(id, clientId, envEnum, token);
 
         return Ok(featureFlag);
     }

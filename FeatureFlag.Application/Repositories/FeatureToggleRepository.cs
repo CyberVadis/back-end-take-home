@@ -4,7 +4,34 @@ namespace FeatureFlag.Application.Repositories;
 
 public class FeatureToggleRepository : IFeatureToggleRepository
 {
-    private List<FeatureToggle> featureToggles = new();
+    private List<FeatureToggle> featureToggles = new()
+    {
+        new FeatureToggle
+        {
+            Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+            Name = "DisabledFeature",
+            Description = "Feature completely disabled in all environments",
+            EnvironmentStates = new List<EnvironmentState>
+            {
+                new() { Environment = EnvironmentEnum.Development, IsActive = false, Percentage = 0 },
+                new() { Environment = EnvironmentEnum.Staging, IsActive = false, Percentage = 0 },
+                new() { Environment = EnvironmentEnum.Production, IsActive = false, Percentage = 0 }
+            }
+        },
+
+        new FeatureToggle
+        {
+            Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+            Name = "EnabledFeature",
+            Description = "Feature fully enabled in all environments",
+            EnvironmentStates = new List<EnvironmentState>
+            {
+                new() { Environment = EnvironmentEnum.Development, IsActive = true, Percentage = 100 },
+                new() { Environment = EnvironmentEnum.Staging, IsActive = true, Percentage = 100 },
+                new() { Environment = EnvironmentEnum.Production, IsActive = true, Percentage = 100 }
+            }
+        }
+    };
 
     public Task<bool> CreateAsync(FeatureToggle featureToggle, CancellationToken token = default)
     {
@@ -35,19 +62,7 @@ public class FeatureToggleRepository : IFeatureToggleRepository
         return Task.FromResult(toogle);
     }
 
-    public Task<bool> IsFeatureEnabled(Guid id, EnvironmentEnum environment, CancellationToken token = default)
-    {
-        var toogle = featureToggles.SingleOrDefault(f => f.Id == id);
-        var environmentData = toogle.EnvironmentStates.SingleOrDefault(e => e.Environment == environment);
-        return Task.FromResult(environmentData.IsActive);
-    }
-
-    public Task<bool> SetPartialActivation(int percentage, CancellationToken token = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> ToggleActivationAsync(Guid id, EnvironmentEnum environment, CancellationToken token = default)
+    public Task<bool> SetPartialActivation(Guid id, EnvironmentEnum environment, int percentage, bool isActive, CancellationToken token = default)
     {
         var featureIndex = featureToggles.FindIndex(x => x.Id == id);
         if (featureIndex == -1)
@@ -58,8 +73,8 @@ public class FeatureToggleRepository : IFeatureToggleRepository
         var environmentStates = featureToggles[featureIndex].EnvironmentStates;
         var envIndex = environmentStates.FindIndex(x => x.Environment == environment);
         var envToUpdate = environmentStates[envIndex];
-        envToUpdate.IsActive = !envToUpdate.IsActive;
-
+        envToUpdate.Percentage = percentage;
+        envToUpdate.IsActive = isActive;
         featureToggles[featureIndex].EnvironmentStates[envIndex] = envToUpdate;
         return Task.FromResult(true);
     }

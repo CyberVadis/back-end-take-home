@@ -27,27 +27,30 @@ public class FeatureFlagService(IFeatureToggleRepository _featureToggleRepositor
         var featureFlag = Guid.TryParse(idOrName, out var id)
             ? await _featureToggleRepository.GetByIdAsync(id, token)
             : await _featureToggleRepository.GetByNameAsync(idOrName, token);
-        if (featureFlag is not null)
-        { 
-            //TODO: Get data from the EnvRepository
-            //featureFlag.EnvironmentStates = Repo;
-        }
         return featureFlag;
     }
 
-    public Task<FeatureToggle?> ToggleActivationAsync(Guid id, EnvironmentEnum environment, CancellationToken token = default)
+    public Task<FeatureToggle?> ToggleActivationAsync(Guid id, EnvironmentEnum environment, int percentage, bool isActive, CancellationToken token = default)
     {
-        var result = _featureToggleRepository.ToggleActivationAsync(id, environment, token);
+        _featureToggleRepository.SetPartialActivation(id, environment, percentage, isActive, token);
         return _featureToggleRepository.GetByIdAsync(id);
     }
 
-    public Task<bool> IsFeatureEnabled(Guid id, EnvironmentEnum environment, CancellationToken token = default)
+    public async Task<bool> IsFeatureEnabled(Guid id, string clientId, EnvironmentEnum environment, CancellationToken token = default)
     {
-        return _featureToggleRepository.IsFeatureEnabled(id, environment, token);
-    }
+        var featureFlag = await _featureToggleRepository.GetByIdAsync(id, token);
+        var environmentData = featureFlag?.EnvironmentStates.SingleOrDefault(e => e.Environment == environment);
+        if (environmentData is null)
+        {
+            return false;
+        }
 
-    public Task<bool> SetPartialActivation(Guid id, EnvironmentEnum environment, int percentage, CancellationToken token = default)
+        return environmentData.IsActive && IsEligibleForRollout(clientId, environmentData.Percentage);
+    }
+    
+    private bool IsEligibleForRollout(string userId, int percentage)
     {
-        throw new NotImplementedException();
+        var hash = Math.Abs(userId.GetHashCode()) % 100;
+        return hash < percentage;
     }
 }
