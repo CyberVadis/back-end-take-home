@@ -161,6 +161,27 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5263/api/featureflags/638c42fc-5489-4243-b602-63060e47e4b4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5263",
+					"path": [
+						"api",
+						"featureflags",
+						"638c42fc-5489-4243-b602-63060e47e4b4"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

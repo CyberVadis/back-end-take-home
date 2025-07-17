@@ -14,11 +14,15 @@
 * Import the PostMan collection from `feature-flag-service/FeatureFlags Rute.postman_collection.json`
 * I left some request to tests all the methods for example with the GUID `11111111-1111-1111-1111-111111111111` which is by default loaded in memory
 
+## Tests with FeatureFlag.Api.http file
+* Open the file and execute the requests here [Tests http file](/FeatureFlag.Api/FeatureFlag.Api.http)
+* It contains tests for the main bussines rules
+
 ## Comments
 
 * No database or external service. Since the task said 4 hour and I desided left the service with the data inmemory, so no persistence
 * Easy transition to persistent storage via IFeatureToggleRepository, creating new concrete implementation with the DB logic
-* I didn´t have enough time to implement Unit Test, github copilot made some but I decided to delete since it does not apport anything
+* I didn´t have enough time to implement Unit Test, github copilot would help but I left it out of scope
 
 ### Time Spend
 
