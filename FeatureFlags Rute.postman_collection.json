@@ -64,7 +64,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5263/api/featureflags/b01008ae-5df7-4533-9b42-2c687da33411",
+					"raw": "http://localhost:5263/api/featureflags/11111111-1111-1111-1111-111111111111",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -73,7 +73,7 @@
 					"path": [
 						"api",
 						"featureflags",
-						"b01008ae-5df7-4533-9b42-2c687da33411"
+						"11111111-1111-1111-1111-111111111111"
 					]
 				}
 			},
@@ -85,7 +85,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5263/api/featureflags/b01008ae-5df7-4533-9b42-2c687da33411/Production",
+					"raw": "http://localhost:5263/api/featureflags/11111111-1111-1111-1111-111111111111/usuarioadmin/Testing",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -94,15 +94,46 @@
 					"path": [
 						"api",
 						"featureflags",
-						"b01008ae-5df7-4533-9b42-2c687da33411",
-						"Production"
+						"11111111-1111-1111-1111-111111111111",
+						"usuarioadmin",
+						"Testing"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "UpdatePartially",
+			"name": "UpdatePartially gradual rollout",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Environment\": \"Production\",\n  \"Isenabled\": true,\n  \"Percentage\": 10 \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5263/api/featureflags/11111111-1111-1111-1111-111111111111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5263",
+					"path": [
+						"api",
+						"featureflags",
+						"11111111-1111-1111-1111-111111111111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateEnvironment",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -116,7 +147,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5263/api/featureflags/b01008ae-5df7-4533-9b42-2c687da33411",
+					"raw": "http://localhost:5263/api/featureflags/11111111-1111-1111-1111-111111111111",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -125,7 +156,7 @@
 					"path": [
 						"api",
 						"featureflags",
-						"b01008ae-5df7-4533-9b42-2c687da33411"
+						"11111111-1111-1111-1111-111111111111"
 					]
 				}
 			},

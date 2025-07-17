@@ -30,6 +30,7 @@ public static class ApplicationServiceCollectionExtensions
                 EnvironmentStates = new List<EnvironmentState>
                 {
                     new() { Environment = EnvironmentEnum.Development, IsActive = false, Percentage = 0 },
+                    new() { Environment = EnvironmentEnum.Testing, IsActive = false, Percentage = 0 },
                     new() { Environment = EnvironmentEnum.Staging, IsActive = false, Percentage = 0 },
                     new() { Environment = EnvironmentEnum.Production, IsActive = false, Percentage = 0 }
                 }
@@ -43,6 +44,7 @@ public static class ApplicationServiceCollectionExtensions
                 EnvironmentStates = new List<EnvironmentState>
                 {
                     new() { Environment = EnvironmentEnum.Development, IsActive = true, Percentage = 100 },
+                    new() { Environment = EnvironmentEnum.Testing, IsActive = true, Percentage = 100 },
                     new() { Environment = EnvironmentEnum.Staging, IsActive = true, Percentage = 100 },
                     new() { Environment = EnvironmentEnum.Production, IsActive = true, Percentage = 100 }
                 }

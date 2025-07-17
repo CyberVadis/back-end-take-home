@@ -42,12 +42,12 @@ public class FeatureToggleRepository(List<FeatureToggle> featureToggles) : IFeat
             return Task.FromResult(false);
         }
 
-        var environmentStates = featureToggles[featureIndex].EnvironmentStates;
-        var envIndex = environmentStates.FindIndex(x => x.Environment == environment);
-        var envToUpdate = environmentStates[envIndex];
-        envToUpdate.Percentage = percentage;
-        envToUpdate.IsActive = isActive;
-        featureToggles[featureIndex].EnvironmentStates[envIndex] = envToUpdate;
+        var environmentToupdate = featureToggles[featureIndex].EnvironmentStates
+            .FirstOrDefault(x => x.Environment == environment);
+            
+        environmentToupdate!.Percentage = percentage;
+        environmentToupdate!.IsActive = isActive;
+        
         return Task.FromResult(true);
     }
 }
