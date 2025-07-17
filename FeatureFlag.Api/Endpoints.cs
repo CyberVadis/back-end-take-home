@@ -14,6 +14,7 @@ public static class Endpoints
         public const string Update = $"{Base}/{{id}}";
         public const string Delete = $"{Base}/{{id}}";
         public const string UpdatePartially = $"{Base}";
+        public const string GetActive = $"{Base}/{{id}}/{{environment}}";
     }
 
     public static class Audit

@@ -14,7 +14,7 @@ public class FeatureFlagService(IFeatureToggleRepository _featureToggleRepositor
 
     public Task<bool> DeleteByIdAsync(Guid id, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        return _featureToggleRepository.DeleteByIdAsync(id, token);
     }
 
     public Task<IEnumerable<FeatureToggle>> GetAllAsync(CancellationToken token = default)
@@ -27,20 +27,26 @@ public class FeatureFlagService(IFeatureToggleRepository _featureToggleRepositor
         var featureFlag = Guid.TryParse(idOrName, out var id)
             ? await _featureToggleRepository.GetByIdAsync(id, token)
             : await _featureToggleRepository.GetByNameAsync(idOrName, token);
+        if (featureFlag is not null)
+        { 
+            //TODO: Get data from the EnvRepository
+            //featureFlag.EnvironmentStates = Repo;
+        }
         return featureFlag;
     }
 
-    public Task<bool> IsFeatureEnabled(Guid id, CancellationToken token = default)
+    public Task<FeatureToggle?> ToggleActivationAsync(Guid id, EnvironmentEnum environment, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var result = _featureToggleRepository.ToggleActivationAsync(id, environment, token);
+        return _featureToggleRepository.GetByIdAsync(id);
     }
 
-    public Task<bool> SetPartialActivation(int percentage, CancellationToken token = default)
+    public Task<bool> IsFeatureEnabled(Guid id, EnvironmentEnum environment, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        return _featureToggleRepository.IsFeatureEnabled(id, environment, token);
     }
 
-    public Task<FeatureToggle?> ToggleActivationAsync(CancellationToken token = default)
+    public Task<bool> SetPartialActivation(Guid id, EnvironmentEnum environment, int percentage, CancellationToken token = default)
     {
         throw new NotImplementedException();
     }

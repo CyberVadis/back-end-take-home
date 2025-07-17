@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "1b82c101-5859-4bc7-8b46-397a05a98fde",
+		"name": "FeatureFlags Rute",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4400684"
+	},
+	"item": [
+		{
+			"name": "Create",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Pagination\",\n  \"description\": \"New table with filters and pagination\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5263/api/featureflags",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5263",
+					"path": [
+						"api",
+						"featureflags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5263/api/featureflags",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5263",
+					"path": [
+						"api",
+						"featureflags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5263/api/featureflags/b01008ae-5df7-4533-9b42-2c687da33411",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5263",
+					"path": [
+						"api",
+						"featureflags",
+						"b01008ae-5df7-4533-9b42-2c687da33411"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByEnvironment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5263/api/featureflags/b01008ae-5df7-4533-9b42-2c687da33411/Production",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5263",
+					"path": [
+						"api",
+						"featureflags",
+						"b01008ae-5df7-4533-9b42-2c687da33411",
+						"Production"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePartially",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Environment\": \"Testing\",\n  \"Isenabled\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5263/api/featureflags/b01008ae-5df7-4533-9b42-2c687da33411",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5263",
+					"path": [
+						"api",
+						"featureflags",
+						"b01008ae-5df7-4533-9b42-2c687da33411"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -32,7 +32,27 @@ public static class ContractMapping
             Id = featureToggle.Id,
             Name = featureToggle.Name,
             Description = featureToggle.Description,
-            EnvironmentState = new ()
+            EnvironmentState = featureToggle.EnvironmentStates.ToMapResponse()
         };
+    }
+
+    public static List<FeatureFlagDetail> ToMapResponse(this List<EnvironmentState> environmentStates)
+    {
+        return environmentStates.Select(es => new FeatureFlagDetail
+        {
+            Environment = es.Environment.ToString(),
+            IsActive = es.IsActive,
+            Percentage = es.Percentage
+        }).ToList();
+    }
+
+    public static List<FeatureFlagResponse> ToFeatureListResponse(this IEnumerable<FeatureToggle> features)
+    {
+        return features.Select(f => new FeatureFlagResponse
+        {
+            Id = f.Id,
+            Name = f.Name,
+            Description = f.Description
+        }).ToList();
     }
 }

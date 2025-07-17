@@ -33,15 +33,14 @@ Then copy/paste to have control of my code.
 
 ## Project
 
-FeatureFLag.API
-FeatureFLag.API.Tests
-FeatureFLag.Services
-FeatureFLag.Services.Tests
-FeatureFLag.Repository
-FeatureFLag.Repository.Tests
++ FeatureFLag.API
++ FeatureFLag.API.Tests
++ FeatureFLag.Services
++ FeatureFLag.Services.Tests
++ FeatureFLag.Repository
++ FeatureFLag.Repository.Tests
 
 ## Endpoints
-(toggle)
 
 ### POST  api/FeatureFlags
 #### User Stories 1: Create Feature flags

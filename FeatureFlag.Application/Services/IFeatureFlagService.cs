@@ -7,8 +7,8 @@ public interface IFeatureFlagService
     Task<bool> CreateAsync(FeatureToggle featureToogle, CancellationToken token = default);
     Task<IEnumerable<FeatureToggle>> GetAllAsync(CancellationToken token = default);
     Task<FeatureToggle?> GetByIdOrNameAsync(string name, CancellationToken token = default);
-    Task<FeatureToggle?> ToggleActivationAsync(CancellationToken token = default);
+    Task<FeatureToggle?> ToggleActivationAsync(Guid id, EnvironmentEnum environment, CancellationToken token = default);
     Task<bool> DeleteByIdAsync(Guid id, CancellationToken token = default);
-    Task<bool> IsFeatureEnabled(Guid id, CancellationToken token = default);
-    Task<bool> SetPartialActivation(int percentage, CancellationToken token = default);
+    Task<bool> IsFeatureEnabled(Guid id, EnvironmentEnum environment, CancellationToken token = default);
+    Task<bool> SetPartialActivation(Guid id, EnvironmentEnum environment,int percentage, CancellationToken token = default);
 }

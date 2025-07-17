@@ -25,7 +25,8 @@ public class FeatureFlagController(IFeatureFlagService _featureFlagService) : Co
     public async Task<IActionResult> GetAll(CancellationToken token)
     {
         var featureFlags = await _featureFlagService.GetAllAsync(token);
-        return Ok(featureFlags);
+        var response = featureFlags.ToFeatureListResponse();
+        return Ok(response);
     }
 
     [HttpGet(Endpoints.FeatureFlag.Get)]
@@ -38,7 +39,7 @@ public class FeatureFlagController(IFeatureFlagService _featureFlagService) : Co
         {
             return NotFound();
         }
-        
+
         return Ok(featureFlag.MapToSingleResponse());
     }
 
@@ -48,12 +49,19 @@ public class FeatureFlagController(IFeatureFlagService _featureFlagService) : Co
         [FromBody] UpdateFeatureFlagRequest request,
         CancellationToken token)
     {
-        var updatedFeatureFlag = await _featureFlagService.ToggleActivationAsync(token);
+        if (!IsValidEnvironment(request.Environment, out var envEnum))
+        {
+            return BadRequest(new
+            {
+                Error = $"Invalid environment. Valid values: {string.Join(", ", Enum.GetNames<EnvironmentEnum>())}"
+            });
+        }
+        var updatedFeatureFlag = await _featureFlagService.ToggleActivationAsync(id, envEnum, token);
         if (updatedFeatureFlag is null)
         {
             return NotFound();
         }
-        
+
         return Ok();
     }
 
@@ -70,13 +78,54 @@ public class FeatureFlagController(IFeatureFlagService _featureFlagService) : Co
         return Ok();
     }
 
-    
+
     [HttpPut(Endpoints.FeatureFlag.UpdatePartially)]
     public async Task<IActionResult> SetPartialActivation(
-        [FromRoute] Guid id,
         [FromBody] UpdatePartiallyRequest request,
         CancellationToken token)
-    {       
-        throw await Task.FromException<NotImplementedException>(new NotImplementedException());
+    {
+        if (!IsValidEnvironment(request.Environment, out var envEnum))
+        {
+            return BadRequest(new
+            {
+                Error = $"Invalid environment. Valid values: {string.Join(", ", Enum.GetNames<EnvironmentEnum>())}"
+            });
+        }
+        var updated = await _featureFlagService.SetPartialActivation(
+            request.FeatureFlagId,
+            envEnum,
+            request.Percentage,
+            token);
+
+        if (!updated)
+        {
+            return NotFound();
+        }
+        return Ok();
+    }
+
+    [HttpGet(Endpoints.FeatureFlag.GetActive)]
+    public async Task<IActionResult> IsActiveByEnvironment(
+        [FromRoute] Guid id,
+        [FromRoute] string environment,
+        CancellationToken token)
+    {
+        if (!IsValidEnvironment(environment, out var envEnum))
+        {
+            return BadRequest(new
+            {
+                Error = $"Invalid environment. Valid values: {string.Join(", ", Enum.GetNames<EnvironmentEnum>())}"
+            });
+        }
+        var featureFlag = await _featureFlagService.IsFeatureEnabled(id, envEnum, token);
+
+        return Ok(featureFlag);
+    }
+    
+
+    private bool IsValidEnvironment(string environment, out EnvironmentEnum envEnum)
+    {
+        return Enum.TryParse<EnvironmentEnum>(environment, ignoreCase: true, out envEnum) &&
+            Enum.IsDefined(typeof(EnvironmentEnum), envEnum);
     }
 }
